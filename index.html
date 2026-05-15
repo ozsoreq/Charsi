@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Charsi ✨</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="game-header">
+    <div class="header-brand">✨ Charsi</div>
+    <div class="header-coins">
+      <div class="coin-badge">
+        <span>🪙</span>
+        <span id="coin-display">0</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- SCREEN 1: WARDROBE -->
+  <div id="screen-character" class="screen active">
+    <div class="wardrobe-scene">
+      <div class="scene-bg"></div>
+      <svg id="main-character" class="character-svg" viewBox="0 0 200 360" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div class="scene-floor"></div>
+    </div>
+
+    <div class="outfit-card">
+      <div class="outfit-card-left">
+        <div class="outfit-label">Current Look</div>
+        <div id="outfit-name" class="outfit-name">Default Style</div>
+        <div id="outfit-score-display" class="outfit-score">Style Score: 0 / 200</div>
+      </div>
+      <div class="outfit-card-right">
+        <div class="star-rating" id="star-rating">☆☆☆☆☆</div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-val" id="stat-coins">0</div>
+        <div class="stat-lbl">🪙 Coins</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="stat-designs">0</div>
+        <div class="stat-lbl">🎨 Designs</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="stat-house-items">0</div>
+        <div class="stat-lbl">🏠 Items</div>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn-main" onclick="showScreen('clothing')">✂️ Design Outfit</button>
+      <button class="btn-secondary" onclick="showScreen('house')">🏠 My House</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: CLOTHING DESIGNER -->
+  <div id="screen-clothing" class="screen">
+    <div class="designer-wrap">
+      <!-- Preview Column -->
+      <div class="preview-col">
+        <svg id="preview-character" class="character-svg preview-char" viewBox="0 0 200 360" xmlns="http://www.w3.org/2000/svg"></svg>
+        <div class="potential-card">
+          <div class="potential-label">Potential Coins</div>
+          <div class="potential-value">🪙 <span id="potential-coins">0</span></div>
+          <div class="potential-bar-bg">
+            <div id="potential-bar" class="potential-bar" style="width:0%"></div>
+          </div>
+          <div class="potential-max">/ 200</div>
+        </div>
+      </div>
+
+      <!-- Design Column -->
+      <div class="design-col">
+        <div class="design-tabs" id="design-tabs">
+          <button class="dtab active" data-cat="top" onclick="switchTab(this,'top')">Top</button>
+          <button class="dtab" data-cat="bottom" onclick="switchTab(this,'bottom')">Bottom</button>
+          <button class="dtab" data-cat="shoes" onclick="switchTab(this,'shoes')">Shoes</button>
+          <button class="dtab" data-cat="hair" onclick="switchTab(this,'hair')">Hair</button>
+          <button class="dtab" data-cat="extras" onclick="switchTab(this,'extras')">Extras</button>
+        </div>
+
+        <div class="design-sections">
+          <!-- TOP -->
+          <div id="dsec-top" class="dsec active">
+            <p class="sec-label">Style</p>
+            <div class="item-grid" id="top-styles-grid"></div>
+            <p class="sec-label">Color</p>
+            <div class="color-palette" id="top-color-pal"></div>
+            <p class="sec-label">Pattern</p>
+            <div class="pattern-grid" id="top-pattern-grid"></div>
+          </div>
+
+          <!-- BOTTOM -->
+          <div id="dsec-bottom" class="dsec">
+            <p class="sec-label">Style</p>
+            <div class="item-grid" id="bottom-styles-grid"></div>
+            <p class="sec-label">Color</p>
+            <div class="color-palette" id="bottom-color-pal"></div>
+            <p class="sec-label">Pattern</p>
+            <div class="pattern-grid" id="bottom-pattern-grid"></div>
+          </div>
+
+          <!-- SHOES -->
+          <div id="dsec-shoes" class="dsec">
+            <p class="sec-label">Style</p>
+            <div class="item-grid" id="shoes-styles-grid"></div>
+            <p class="sec-label">Color</p>
+            <div class="color-palette" id="shoes-color-pal"></div>
+          </div>
+
+          <!-- HAIR -->
+          <div id="dsec-hair" class="dsec">
+            <p class="sec-label">Hair Style</p>
+            <div class="item-grid" id="hair-styles-grid"></div>
+            <p class="sec-label">Hair Color</p>
+            <div class="color-palette" id="hair-color-pal"></div>
+            <p class="sec-label">Skin Tone</p>
+            <div class="color-palette" id="skin-tone-pal"></div>
+          </div>
+
+          <!-- EXTRAS -->
+          <div id="dsec-extras" class="dsec">
+            <p class="sec-label">Hat</p>
+            <div class="item-grid" id="hat-styles-grid"></div>
+            <div class="color-palette" id="hat-color-pal" style="margin-bottom:14px"></div>
+            <p class="sec-label">Bag</p>
+            <div class="item-grid" id="bag-styles-grid"></div>
+            <div class="color-palette" id="bag-color-pal" style="margin-bottom:14px"></div>
+            <p class="sec-label">Accessory</p>
+            <div class="item-grid" id="acc-styles-grid"></div>
+            <div class="color-palette" id="acc-color-pal"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-bar">
+      <button class="btn-submit" onclick="submitDesign()">
+        ✨ Submit Design &amp; Earn Coins
+      </button>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: HOUSE DESIGNER -->
+  <div id="screen-house" class="screen">
+    <div class="house-layout">
+      <!-- Room -->
+      <div class="room-section">
+        <div class="room-toolbar">
+          <span class="room-title-text">🏠 My Room</span>
+          <div class="room-controls">
+            <select id="wall-select" onchange="changeWall(this.value)" class="wall-select">
+              <option value="#FFF9E6">🟡 Cream</option>
+              <option value="#E8F4FD">🔵 Sky</option>
+              <option value="#FDF0F8">🩷 Pink</option>
+              <option value="#F0FDF4">🟢 Mint</option>
+              <option value="#F5F0FF">🟣 Lavender</option>
+              <option value="#FFF3E0">🟠 Peach</option>
+            </select>
+            <button class="btn-tiny danger" onclick="clearRoom()">🗑️ Clear</button>
+          </div>
+        </div>
+        <div id="room-grid" class="room-grid"></div>
+        <div class="floor-row">
+          <span class="floor-lbl">Floor:</span>
+          <button class="fbtn active" onclick="changeFloor('wood',this)">🪵 Wood</button>
+          <button class="fbtn" onclick="changeFloor('tile',this)">⬜ Tile</button>
+          <button class="fbtn" onclick="changeFloor('carpet',this)">🟫 Carpet</button>
+          <button class="fbtn" onclick="changeFloor('marble',this)">⚪ Marble</button>
+        </div>
+      </div>
+
+      <!-- Shop -->
+      <div class="shop-section">
+        <div class="shop-header">
+          <span class="shop-title">🛒 Shop</span>
+          <span class="shop-coins-display">🪙 <span id="shop-coin-display">0</span></span>
+        </div>
+        <div class="shop-cats">
+          <button class="scat active" onclick="filterShop('all',this)">All</button>
+          <button class="scat" onclick="filterShop('seating',this)">Seating</button>
+          <button class="scat" onclick="filterShop('storage',this)">Storage</button>
+          <button class="scat" onclick="filterShop('decor',this)">Decor</button>
+          <button class="scat" onclick="filterShop('appliances',this)">Appliances</button>
+        </div>
+        <div id="shop-grid" class="shop-grid"></div>
+        <div id="place-hint" class="place-hint">Tap an item to select, then tap a cell in the room to place it</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="bnav active" id="bnav-character" onclick="showScreen('character')">
+      <span class="bnav-icon">👗</span>
+      <span class="bnav-lbl">Wardrobe</span>
+    </button>
+    <button class="bnav" id="bnav-clothing" onclick="showScreen('clothing')">
+      <span class="bnav-icon">✂️</span>
+      <span class="bnav-lbl">Design</span>
+    </button>
+    <button class="bnav" id="bnav-house" onclick="showScreen('house')">
+      <span class="bnav-icon">🏠</span>
+      <span class="bnav-lbl">House</span>
+    </button>
+  </nav>
+
+  <!-- REWARD MODAL -->
+  <div id="reward-overlay" class="reward-overlay hidden">
+    <div class="reward-card">
+      <div class="reward-sparkle">✨✨✨</div>
+      <div class="reward-title">Amazing Design!</div>
+      <div class="reward-coins">+<span id="reward-amount">0</span> 🪙</div>
+      <div id="reward-msg" class="reward-msg">Your outfit is stunning!</div>
+      <div class="reward-breakdown" id="reward-breakdown"></div>
+      <button class="btn-main" onclick="closeReward()">🎉 Collect Coins!</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
