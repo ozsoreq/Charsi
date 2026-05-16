@@ -24,7 +24,6 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.41.9'
           channel: stable
           cache: true
 
@@ -41,4 +40,4 @@ jobs:
         with:
           name: charsi-debug
           path: charsi/build/app/outputs/flutter-apk/app-debug.apk
-          retention-days: 7
+          retention-days: 14
